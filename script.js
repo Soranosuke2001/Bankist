@@ -108,7 +108,17 @@ const withdrawals = movements.filter(movement => {
 console.log(deposits);
 console.log(withdrawals);
 
+const balance = movements.reduce((acc, cur) => {
+  return acc + cur;
+}, 0);
 
+console.log(balance);
+
+const maxDeposit = movements.reduce((acc, cur) => {
+  return cur > acc ? cur : acc;
+}, movements[0]);
+
+console.log(maxDeposit);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
