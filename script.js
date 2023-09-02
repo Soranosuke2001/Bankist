@@ -81,6 +81,20 @@ function displayMovement(movements) {
 
 displayMovement(account1.movements);
 
+const createUsernames = accounts => {
+  accounts.forEach(account => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(" ")
+      .map(word => word[0])
+      .join("");
+  });
+
+  console.log(accounts);
+};
+
+createUsernames(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
