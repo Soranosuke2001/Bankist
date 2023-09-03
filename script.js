@@ -92,8 +92,6 @@ const createUsernames = accounts => {
       .map(word => word[0])
       .join("");
   });
-
-  console.log(accounts);
 };
 
 createUsernames(accounts);
@@ -148,6 +146,7 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
+// Filter Method
 // const deposits = movements.filter(movement => {
 //   return movement > 0;
 // });
@@ -159,6 +158,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(deposits);
 // console.log(withdrawals);
 
+// Reduce Method
 // const balance = movements.reduce((acc, cur) => {
 //   return acc + cur;
 // }, 0);
@@ -170,3 +170,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // }, movements[0]);
 
 // console.log(maxDeposit);
+
+// Find Method
+// const firstWithdrawal = movements.find(mov => mov < 0);
+// console.log(firstWithdrawal);
+
+// const account = accounts.find(acc => acc.owner === "Jessica Davis");
+// console.log(account);
