@@ -129,6 +129,7 @@ const calcDisplaySummary = account => {
 let currentAcc = null;
 createUsernames(accounts);
 
+// Update the UI components
 function updateUI(account) {
   displayMovement(account.movements);
   calcDisplayBalance(account);
@@ -166,9 +167,11 @@ btnLogin.addEventListener("click", e => {
 btnTransfer.addEventListener("click", e => {
   e.preventDefault();
 
+  // Fetch the data the inputted data
   const amount = Number(inputTransferAmount.value);
   const receiver = accounts.find(acc => acc.username === inputTransferTo.value);
 
+  // Check if the inputted parameters are valid
   if (
     amount > 0 &&
     receiver &&
@@ -177,9 +180,11 @@ btnTransfer.addEventListener("click", e => {
   ) {
     console.log("Valid Transfer");
 
+    // Add the movements to the movement array
     currentAcc.movements.push(-amount);
     receiver.movements.push(amount);
 
+    // Update the UI
     updateUI(currentAcc);
   } else {
     console.log("Invalid Transfer");
