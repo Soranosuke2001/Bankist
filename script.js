@@ -223,16 +223,22 @@ btnClose.addEventListener("click", e => {
   }
 });
 
+// Loan button handler
 btnLoan.addEventListener("click", e => {
   e.preventDefault();
 
+  // Fetch the requested loan amount
   const loanAmt = Number(inputLoanAmount.value);
 
+  // Check if the loan amount is valid
   if (loanAmt > 0 && currentAcc.movements.some(mov => mov >= loanAmt * 0.1)) {
+    // Add the deposited loan to the user's movements array
     currentAcc.movements.push(loanAmt);
 
+    // Update the UI
     updateUI(currentAcc);
 
+    // Clear the loan input field
     inputLoanAmount.value = "";
   } else {
     console.log("Invalid Loan Amount");
