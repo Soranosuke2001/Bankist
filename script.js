@@ -136,6 +136,7 @@ function updateUI(account) {
   calcDisplaySummary(account);
 }
 
+// Login button handler
 btnLogin.addEventListener("click", e => {
   e.preventDefault();
 
@@ -164,6 +165,7 @@ btnLogin.addEventListener("click", e => {
   }
 });
 
+// Transfer button handler
 btnTransfer.addEventListener("click", e => {
   e.preventDefault();
 
@@ -191,6 +193,27 @@ btnTransfer.addEventListener("click", e => {
     inputTransferAmount.value = inputTransferTo = "";
   } else {
     console.log("Invalid Transfer");
+  }
+});
+
+btnClose.addEventListener("click", e => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAcc.username &&
+    Number(inputClosePin.value) === currentAcc.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAcc.username
+    );
+
+    accounts.splice(index, 1);
+
+    containerApp.style.opacity = 0;
+
+    inputCloseUsername.value = inputClosePin.value = "";
+  } else {
+    console.log("Invalid Username or PIN");
   }
 });
 
