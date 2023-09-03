@@ -81,8 +81,6 @@ function displayMovement(movements) {
   });
 }
 
-displayMovement(account1.movements);
-
 // Create a short username for each account
 const createUsernames = accounts => {
   accounts.forEach(account => {
@@ -94,8 +92,6 @@ const createUsernames = accounts => {
   });
 };
 
-createUsernames(accounts);
-
 // Display the current balance for the account
 const calcDisplayBalance = movements => {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
@@ -103,35 +99,57 @@ const calcDisplayBalance = movements => {
   labelBalance.textContent = `${balance}€`;
 };
 
-calcDisplayBalance(account1.movements);
-
 // Display the total income, payments and interest for the account
-const calcDisplaySummary = movements => {
+const calcDisplaySummary = account => {
   // Account income balance
-  const incomes = movements
+  const incomes = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumIn.textContent = `${incomes}€`;
 
   // Account payment balance
-  const payments = movements
+  const payments = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumOut.textContent = `${Math.abs(payments)}€`;
 
   // Account interest balance
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     .filter(int => int >= 1)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumInterest.textContent = `${interest}€`;
 };
 
-calcDisplaySummary(account1.movements);
+let currentAcc = null;
+createUsernames(accounts);
+
+btnLogin.addEventListener("click", e => {
+  e.preventDefault();
+
+  currentAcc = accounts.find(acc => acc.username === inputLoginUsername.value);
+
+  if (currentAcc?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome Back, ${
+      currentAcc.owner.split(" ")[0]
+    }!`;
+
+    containerApp.style.opacity = 100;
+
+    inputLoginUsername.value = "";
+    inputLoginPin.value = "";
+
+    inputLoginPin.blur();
+
+    displayMovement(currentAcc.movements);
+    calcDisplayBalance(currentAcc.movements);
+    calcDisplaySummary(currentAcc);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
