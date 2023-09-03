@@ -93,8 +93,9 @@ const createUsernames = accounts => {
 };
 
 // Display the current balance for the account
-const calcDisplayBalance = movements => {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+const calcDisplayBalance = account => {
+  const balance = account.movements.reduce((acc, mov) => acc + mov, 0);
+  account.balance = balance;
 
   labelBalance.textContent = `${balance}€`;
 };
@@ -128,6 +129,12 @@ const calcDisplaySummary = account => {
 let currentAcc = null;
 createUsernames(accounts);
 
+function updateUI(account) {
+  displayMovement(account.movements);
+  calcDisplayBalance(account);
+  calcDisplaySummary(account);
+}
+
 btnLogin.addEventListener("click", e => {
   e.preventDefault();
 
@@ -152,9 +159,30 @@ btnLogin.addEventListener("click", e => {
     inputLoginPin.blur();
 
     // Fetch the correct account data
-    displayMovement(currentAcc.movements);
-    calcDisplayBalance(currentAcc.movements);
-    calcDisplaySummary(currentAcc);
+    updateUI(currentAcc);
+  }
+});
+
+btnTransfer.addEventListener("click", e => {
+  e.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const receiver = accounts.find(acc => acc.username === inputTransferTo.value);
+
+  if (
+    amount > 0 &&
+    receiver &&
+    currentAcc.balance >= amount &&
+    receiver?.username !== currentAcc.username
+  ) {
+    console.log("Valid Transfer");
+
+    currentAcc.movements.push(-amount);
+    receiver.movements.push(amount);
+
+    updateUI(currentAcc);
+  } else {
+    console.log("Invalid Transfer");
   }
 });
 
