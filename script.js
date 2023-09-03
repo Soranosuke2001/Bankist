@@ -186,6 +186,9 @@ btnTransfer.addEventListener("click", e => {
 
     // Update the UI
     updateUI(currentAcc);
+
+    // Clear the inputs
+    inputTransferAmount.value = inputTransferTo = "";
   } else {
     console.log("Invalid Transfer");
   }
