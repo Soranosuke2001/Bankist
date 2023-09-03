@@ -223,6 +223,22 @@ btnClose.addEventListener("click", e => {
   }
 });
 
+btnLoan.addEventListener("click", e => {
+  e.preventDefault();
+
+  const loanAmt = Number(inputLoanAmount.value);
+
+  if (loanAmt > 0 && currentAcc.movements.some(mov => mov >= loanAmt * 0.1)) {
+    currentAcc.movements.push(loanAmt);
+
+    updateUI(currentAcc);
+
+    inputLoanAmount.value = "";
+  } else {
+    console.log("Invalid Loan Amount");
+  }
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
