@@ -131,20 +131,27 @@ createUsernames(accounts);
 btnLogin.addEventListener("click", e => {
   e.preventDefault();
 
+  // Get the current user
   currentAcc = accounts.find(acc => acc.username === inputLoginUsername.value);
 
+  // Check if the user provided the correct pin
   if (currentAcc?.pin === Number(inputLoginPin.value)) {
+    // Change the welcome message
     labelWelcome.textContent = `Welcome Back, ${
       currentAcc.owner.split(" ")[0]
     }!`;
 
+    // Display the data on the screen
     containerApp.style.opacity = 100;
 
+    // Clear the login input fields
     inputLoginUsername.value = "";
     inputLoginPin.value = "";
 
+    // Unfocus the pin input
     inputLoginPin.blur();
 
+    // Fetch the correct account data
     displayMovement(currentAcc.movements);
     calcDisplayBalance(currentAcc.movements);
     calcDisplaySummary(currentAcc);
