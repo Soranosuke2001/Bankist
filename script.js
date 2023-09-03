@@ -196,21 +196,27 @@ btnTransfer.addEventListener("click", e => {
   }
 });
 
+// Delete Account button handler
 btnClose.addEventListener("click", e => {
   e.preventDefault();
 
+  // Check if the input parameters are valid
   if (
     inputCloseUsername.value === currentAcc.username &&
     Number(inputClosePin.value) === currentAcc.pin
   ) {
+    // Find the index of the account in the accounts array
     const index = accounts.findIndex(
       acc => acc.username === currentAcc.username
     );
 
+    // Remove the account from the accounts array
     accounts.splice(index, 1);
 
+    // Hide the UI
     containerApp.style.opacity = 0;
 
+    // Clear the input fields
     inputCloseUsername.value = inputClosePin.value = "";
   } else {
     console.log("Invalid Username or PIN");
