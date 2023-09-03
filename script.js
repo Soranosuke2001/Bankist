@@ -63,8 +63,10 @@ const inputClosePin = document.querySelector(".form__input--pin");
 
 function displayMovement(movements) {
   // Empty the entire container
+  // Clear the original data
   containerMovements.innerHTML = "";
 
+  // Display each activity for the account
   movements.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
     const html = `
@@ -81,6 +83,7 @@ function displayMovement(movements) {
 
 displayMovement(account1.movements);
 
+// Create a short username for each account
 const createUsernames = accounts => {
   accounts.forEach(account => {
     account.username = account.owner
@@ -95,6 +98,7 @@ const createUsernames = accounts => {
 
 createUsernames(accounts);
 
+// Display the current balance for the account
 const calcDisplayBalance = movements => {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
 
@@ -103,19 +107,23 @@ const calcDisplayBalance = movements => {
 
 calcDisplayBalance(account1.movements);
 
+// Display the total income, payments and interest for the account
 const calcDisplaySummary = movements => {
+  // Account income balance
   const incomes = movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumIn.textContent = `${incomes}€`;
 
+  // Account payment balance
   const payments = movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   labelSumOut.textContent = `${Math.abs(payments)}€`;
 
+  // Account interest balance
   const interest = movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * 1.2) / 100)
@@ -140,25 +148,25 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
-const deposits = movements.filter(movement => {
-  return movement > 0;
-});
+// const deposits = movements.filter(movement => {
+//   return movement > 0;
+// });
 
-const withdrawals = movements.filter(movement => {
-  return movement < 0;
-});
+// const withdrawals = movements.filter(movement => {
+//   return movement < 0;
+// });
 
-console.log(deposits);
-console.log(withdrawals);
+// console.log(deposits);
+// console.log(withdrawals);
 
-const balance = movements.reduce((acc, cur) => {
-  return acc + cur;
-}, 0);
+// const balance = movements.reduce((acc, cur) => {
+//   return acc + cur;
+// }, 0);
 
-console.log(balance);
+// console.log(balance);
 
-const maxDeposit = movements.reduce((acc, cur) => {
-  return cur > acc ? cur : acc;
-}, movements[0]);
+// const maxDeposit = movements.reduce((acc, cur) => {
+//   return cur > acc ? cur : acc;
+// }, movements[0]);
 
-console.log(maxDeposit);
+// console.log(maxDeposit);
