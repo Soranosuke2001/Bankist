@@ -143,8 +143,15 @@ const calcDisplaySummary = account => {
   labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
+const setDate = () => {
+  const today = new Date().toLocaleDateString();
+
+  labelDate.textContent = `${today}`
+};
+
 let currentAcc = null;
 createUsernames(accounts);
+setDate();
 
 // Update the UI components
 function updateUI(account) {
