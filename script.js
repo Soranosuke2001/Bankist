@@ -215,7 +215,7 @@ btnLogin.addEventListener("click", e => {
 
     // If there is a timer, clear it
     if (timer) clearInterval(timer);
-    
+
     // Set the timer
     timer = logoutTimerHandler();
 
@@ -250,6 +250,10 @@ btnTransfer.addEventListener("click", e => {
 
     // Clear the inputs
     inputTransferAmount.value = inputTransferTo = "";
+
+    // Reset the timer
+    clearInterval(timer);
+    timer = logoutTimerHandler();
   } else {
     console.log("Invalid Transfer");
   }
@@ -299,6 +303,10 @@ btnLoan.addEventListener("click", e => {
 
     // Clear the loan input field
     inputLoanAmount.value = "";
+
+    // Reset the timer
+    clearInterval(timer);
+    timer = logoutTimerHandler();
   } else {
     console.log("Invalid Loan Amount");
   }
