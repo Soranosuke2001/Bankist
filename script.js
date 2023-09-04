@@ -146,10 +146,39 @@ const calcDisplaySummary = account => {
 const setDate = () => {
   const today = new Date().toLocaleDateString();
 
-  labelDate.textContent = `${today}`
+  labelDate.textContent = `${today}`;
+};
+
+const logoutTimerHandler = () => {
+  // 10min timer
+  let logoutTimer = 600;
+
+  // Each second update the
+  const timer = setInterval(() => {
+    // Setting the min and sec
+    const min = String(Math.trunc(logoutTimer / 60)).padStart(2, 0);
+    const sec = String(logoutTimer % 60).padStart(2, 0);
+
+    // Formatting the timer label
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // Logout the user once the timer reaches 0
+    if (logoutTimer === 0) {
+      clearInterval(timer);
+
+      labelWelcome.textContent = "Login to get started";
+      containerApp.style.opacity = 0;
+    }
+
+    // Subtract each second
+    logoutTimer--;
+  }, 1000);
+
+  return timer;
 };
 
 let currentAcc = null;
+let timer = null;
 createUsernames(accounts);
 setDate();
 
@@ -183,6 +212,12 @@ btnLogin.addEventListener("click", e => {
 
     // Unfocus the pin input
     inputLoginPin.blur();
+
+    // If there is a timer, clear it
+    if (timer) clearInterval(timer);
+    
+    // Set the timer
+    timer = logoutTimerHandler();
 
     // Fetch the correct account data
     updateUI(currentAcc);
@@ -364,4 +399,3 @@ Output:
 // .reduce((acc, mov) => acc + mov, 0);
 // console.log(overallBalance2);
 // Output: 17840
-
