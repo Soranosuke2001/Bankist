@@ -61,13 +61,18 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
-function displayMovement(movements) {
+let sorted = false;
+
+function displayMovement(movements, sort = false) {
   // Empty the entire container
   // Clear the original data
   containerMovements.innerHTML = "";
 
+  // Sort the list of account movements
+  const activities = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
   // Display each activity for the account
-  movements.forEach(function (mov, i) {
+  activities.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
     const html = `
     <div class="movements__row">
@@ -243,6 +248,15 @@ btnLoan.addEventListener("click", e => {
   } else {
     console.log("Invalid Loan Amount");
   }
+});
+
+// Sort button handler
+btnSort.addEventListener("click", e => {
+  e.preventDefault();
+
+  // Set the sorting state to the opposite boolean value
+  sorted = !sorted;
+  displayMovement(currentAcc.movements, sorted);
 });
 
 /////////////////////////////////////////////////
